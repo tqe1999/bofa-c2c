@@ -1,0 +1,71 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:14
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - "database.env"
+    # volumes: 
+    #   - db:/var/lib/postgresql/data
+
+  balance_ingest:
+    &csv_ingest
+    image: csv_ingest
+    build:
+      context: ./
+      dockerfile: csv_ingest/Dockerfile
+    command: python main.py input.csv ledger_balance
+    env_file:
+      - "database.env"
+    volumes:
+      - ./LedgerBalance.csv:/app/input.csv
+    depends_on:
+      - postgres
+    links:
+      - postgres
+
+  transaction_ingest:
+    <<: *csv_ingest
+    command: python main.py input.csv ledger_transactions
+    volumes:
+      - ./LedgerTransactions.csv:/app/input.csv
+
+  swift_ingest:
+    image: swift_ingest
+    build:
+      context: ./
+      dockerfile: swift_ingest/Dockerfile
+    command: python main.py input.csv
+    env_file:
+      - "database.env"
+    volumes:
+      - ./swift_sample_msg.xml:/app/input.xml
+    depends_on:
+      balance_ingest:
+        condition: service_completed_successfully
+      transaction_ingest:
+        condition: service_completed_successfully
+  
+  api:
+    image: api
+    build:
+      context: ./
+      dockerfile: api/Dockerfile
+    env_file:
+      - "database.env"
+    ports:
+      - 5000:5000
+
+  frontend:
+    image: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+
+volumes: 
+  db:
+    driver: local
