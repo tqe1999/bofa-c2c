@@ -51,7 +51,7 @@ function DataTable({
   const defaultValue = entriesPerPage.defaultValue ? entriesPerPage.defaultValue : 10;
   const entries = entriesPerPage.entries
     ? entriesPerPage.entries.map((el) => el.toString())
-    : ["5", "10", "15", "20", "25"];
+    : ["10", "15", "20", "25", "50"];
   const columns = useMemo(() => table.columns, [table]);
   const data = useMemo(() => table.rows, [table]);
 
@@ -168,7 +168,7 @@ function DataTable({
   return (
     <TableContainer sx={{ boxShadow: "none" }}>
       {entriesPerPage || canSearch ? (
-        <MDBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
+        <MDBox display="flex" justifyContent="space-between" alignItems="center" p={2}>
           {entriesPerPage && (
             <MDBox display="flex" alignItems="center">
               <Autocomplete

@@ -16,7 +16,7 @@ services:
     build:
       context: ./
       dockerfile: csv_ingest/Dockerfile
-    command: python main.py input.csv ledger_balance
+    command: python main.py input.csv ledger_balances
     env_file:
       - "database.env"
     volumes:
@@ -37,7 +37,7 @@ services:
     build:
       context: ./
       dockerfile: swift_ingest/Dockerfile
-    command: python main.py input.csv
+    command: python main.py input.xml
     env_file:
       - "database.env"
     volumes:

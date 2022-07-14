@@ -25,20 +25,23 @@ import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
+import transactionTableData from "layouts/tables/data/transactionTableData";
+import balanceTableData from "layouts/tables/data/balanceTableData";
 
 function Tables() {
-  const { columns, rows } = authorsTableData();
+  const { columns: transactionColumns, rows: transactionRows } = transactionTableData();
+  const { columns: balanceColumns, rows: balanceRows } = balanceTableData();
+
 
   return (
     <MDBox pt={6} pb={3}>
-      <Grid container spacing={6}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Card>
             <MDBox
               mx={2}
-              mt={-3}
-              py={3}
+              mt={-4}
+              py={1}
               px={2}
               variant="gradient"
               bgColor="info"
@@ -46,22 +49,48 @@ function Tables() {
               coloredShadow="info"
             >
               <MDTypography variant="h6" color="white">
-                Sensor Status
+                Balance Status
               </MDTypography>
             </MDBox>
-            <MDBox pt={3}>
+            <MDBox pt={1}>
               <DataTable
-                table={{ columns, rows }}
+                table={{ columns: balanceColumns, rows: balanceRows }}
                 isSorted
-                entriesPerPage={false}
+                entriesPerPage={{ defaultValue: 5 }}
                 showTotalEntries={false}
                 noEndBorder
+              />
+            </MDBox>
+          </Card>
+          <MDBox mx={1}></MDBox>
+          <Card>
+            <MDBox
+              mx={2}
+              mt={1}
+              py={0.5}
+              px={2}
+              variant="gradient"
+              bgColor="info"
+              borderRadius="lg"
+              coloredShadow="info"
+            >
+              <MDTypography variant="h6" color="white">
+                Transaction Status
+              </MDTypography>
+            </MDBox>
+            <MDBox pt={1}>
+              <DataTable
+                table={{ columns: transactionColumns, rows: transactionRows }}
+                isSorted
+                entriesPerPage={{ defaultValue: 25 }}
+                showTotalEntries={false}
               />
             </MDBox>
           </Card>
         </Grid>
       </Grid>
     </MDBox>
+    
   );
 }
 

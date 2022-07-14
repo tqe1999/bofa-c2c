@@ -33,8 +33,8 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
     <MDBox
       component="th"
       width={width}
-      py={1.5}
-      px={3}
+      py={1}
+      px={1}
       sx={({ palette: { light }, borders: { borderWidth } }) => ({
         borderBottom: `${borderWidth[1]} solid ${light.main}`,
       })}
@@ -43,7 +43,7 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
         {...rest}
         position="relative"
         textAlign={align}
-        color={darkMode ? "white" : "secondary"}
+        color={darkMode ? "white" : "grey-700"}
         opacity={0.7}
         sx={({ typography: { size, fontWeightBold } }) => ({
           fontSize: size.xxs,

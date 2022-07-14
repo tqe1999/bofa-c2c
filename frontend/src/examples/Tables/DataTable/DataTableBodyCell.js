@@ -24,8 +24,8 @@ function DataTableBodyCell({ noBorder, align, children }) {
     <MDBox
       component="td"
       textAlign={align}
-      py={1.5}
-      px={3}
+      py={0.7}
+      px={1}
       sx={({ palette: { light }, typography: { size }, borders: { borderWidth } }) => ({
         fontSize: size.sm,
         borderBottom: noBorder ? "none" : `${borderWidth[1]} solid ${light.main}`,
@@ -34,7 +34,7 @@ function DataTableBodyCell({ noBorder, align, children }) {
       <MDBox
         display="inline-block"
         width="max-content"
-        color="text"
+        color="grey-900"
         sx={{ verticalAlign: "middle" }}
       >
         {children}

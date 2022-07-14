@@ -28,8 +28,8 @@ export default function data() {
 
   useEffect(() => {
     async function getData() {
-      await axios.get("http://localhost:5000/transaction/all").then((res) => {
-        setStatuses(res.data.transactions);
+      await axios.get("http://localhost:5000/balance/all").then((res) => {
+        setStatuses(res.data.balances);
         setLoadingData(false);
       });
     }
@@ -41,25 +41,27 @@ export default function data() {
   return {
     columns: [
       { Header: "Account", accessor: "account", align: "left", sortType: "caseInsensitive" },
-      { Header: "Value Date", accessor: "value_date", align: "left", sortType: "caseInsensitive" },
       { Header: "Currency", accessor: "currency", align: "left", sortType: "caseInsensitive" },
-      { Header: "Credit/Debit", accessor: "credit_debit", align: "left", sortType: "caseInsensitive" },
-      { Header: "Amount", accessor: "amount", align: "left" },
-      { Header: "Reference", accessor: "reference", align: "center" },
+      { Header: "Date", accessor: "date", align: "left", sortType: "caseInsensitive" },
+      { Header: "Open", accessor: "open", align: "left", sortType: "caseInsensitive" },
+      { Header: "Close", accessor: "close", align: "left", sortType: "caseInsensitive" },
+      { Header: "Difference", accessor: "difference", align: "left", sortType: "caseInsensitive" },
+      { Header: "Outstanding", accessor: "outstanding", align: "left", sortType: "caseInsensitive" },
       { Header: "Reconciled", accessor: "reconciled", align: "center" },
     ],
     rows: statuses.map((item) => ({
-      account: item.Account,
-      value_date: item.ValueDate,
-      currency: item.Currency,
-      credit_debit: item.CreditDebit,
-      reference: item.TransactionReference,
-      amount: item.Amount,
+      account: item.account,
+      date: item.date,
+      currency: item.currency,
+      open: item.open,
+      close: item.close,
+      difference: item.difference,
+      outstanding: item.outstanding,
       reconciled: (
         <MDBox ml={-1}>
           <MDBadge
-            badgeContent={item.reconciled}
-            color={item.reconciled === "true" ? "success" : "error"}
+            badgeContent={item.reconciled.toString()}
+            color={item.reconciled ? "success" : "error"}
             variant="gradient"
             size="sm"
           />
