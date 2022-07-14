@@ -6,5 +6,6 @@ RUN pip install -r requirements.txt
 
 COPY ./lib ./lib
 COPY ./swift_ingest .
+RUN python -m pytest
 
 CMD [ "python", "-u", "main.py" ]
