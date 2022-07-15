@@ -60,7 +60,7 @@ swift_count = {
 }
 
 def test_one_to_one():
-    reconciled, ledger_count_test, swift_count_test = one_to_one(ledger_transactions, swift_transactions, "user", "1") 
+    reconciled, ledger_count_test, swift_count_test = one_to_one(ledger_transactions, swift_transactions) 
     assert ledger_count_test == ledger_count
     assert swift_count_test == swift_count
 

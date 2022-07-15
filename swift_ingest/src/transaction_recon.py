@@ -19,7 +19,7 @@ def count_transactions(transactions):
 
     return di
 
-def one_to_one(ledger, swift, account_id, txn_ref):
+def one_to_one(ledger, swift):
     """
     finds and reconciles one to one matching transactions 
     returns outstanding unreconciled ledger and swift transactions
@@ -70,7 +70,7 @@ def find_combi(sum, combi):
         if i[0] == sum:
             return i[1]
 
-def many_to_many(ledger_count, swift_count, account_id, txn_ref):
+def many_to_many(ledger_count, swift_count):
     """finds and reconciles many to many matching transactions"""
     # calculate all sums and combinations of transactions
     ledger_list = dict_to_sorted_list(ledger_count)

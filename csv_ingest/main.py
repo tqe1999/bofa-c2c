@@ -29,4 +29,4 @@ df["reconciled"] = False
 df.columns = [inflection.underscore(x) for x in df.columns]
 
 # load dataframe to SQL
-df.to_sql(data_type, con=db, index=True, if_exists="replace")
+df.to_sql(data_type, con=db, index=True, if_exists="append")

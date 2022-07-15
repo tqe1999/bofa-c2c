@@ -29,7 +29,7 @@ checked_balances = balance_recon.swift_recon(swift_balances, swift_transactions,
 df = pd.DataFrame.from_dict(checked_balances, orient="index")
 df["date"] = df.index
 df.reset_index()
-df.to_sql("swift_balances", con=db, index=False, if_exists="replace")
+df.to_sql("swift_balances", con=db, index=False, if_exists="append")
 
 # invalidate transactions within the time period of unreconciled balances
 failed_dates = []
@@ -40,8 +40,8 @@ for date in checked_balances.keys():
 swift_transactions = [x for x in swift_transactions if not x["date"] in failed_dates]
 
 # reconcile transactions
-reconciled, ledger_count, swift_count = transaction_recon.one_to_one(ledger_transactions, swift_transactions, account_id, txn_ref)
-reconciled.extend(transaction_recon.many_to_many(ledger_count, swift_count, account_id, txn_ref))
+reconciled, ledger_count, swift_count = transaction_recon.one_to_one(ledger_transactions, swift_transactions)
+reconciled.extend(transaction_recon.many_to_many(ledger_count, swift_count))
 
 for transaction in reconciled:
     sql.set_transaction_recon(account_id, txn_ref, transaction["amount"], transaction["count"])
